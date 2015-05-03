@@ -1,1 +1,1 @@
-# TankWarz
+Myriad: The only game on the shelf that doesn't suck
