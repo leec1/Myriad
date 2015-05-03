@@ -31,15 +31,22 @@ public class Player : MonoBehaviour {
 
 	public bool becomeSoldier()
 	{
-		bool success = false;
+		bool success;
 		lock (this) {
-			if (Role.COMMANDER == currentRole) {
-				if (CommandBase.Instance.leave (this)) {
-					// Successfully Left the Commmand Base
-					currentRole = Role.SOLDIER;
-					viewStyle = ViewStyle.FIRST_PERSON;
-					success = true;
-				}
+			switch ( currentRole ) {
+				case Role.COMMANDER:
+					if (CommandBase.Instance.leave (this)) {
+						// Successfully Left the Commmand Base
+						currentRole = Role.SOLDIER;
+						viewStyle = ViewStyle.FIRST_PERSON;
+						success = true;
+					} else {
+						success = false;
+					}
+					break;
+				default:
+					success = false;
+					break;
 			}
 		}
 		return success;
@@ -47,15 +54,22 @@ public class Player : MonoBehaviour {
 
 	public bool becomeCommander()
 	{
-		bool success = false;
+		bool success;
 		lock ( this ) {
-			if ( Role.SOLDIER == currentRole ) {
-				if ( CommandBase.Instance.enter (this) ) {
-					// Successfully Entered the Command Base
-					currentRole = Role.COMMANDER;
-					viewStyle = ViewStyle.TOP_DOWN;
-					success = true;
-				}
+			switch ( currentRole ) {
+				case Role.SOLDIER:
+					if ( CommandBase.Instance.enter (this) ) {
+						// Successfully Entered the Command Base
+						currentRole = Role.COMMANDER;
+						viewStyle = ViewStyle.TOP_DOWN;
+						success = true;
+					} else {
+						success = false;
+					}
+					break;
+				default:
+					success = false;
+					break;
 			}
 		}
 		return success;
@@ -63,12 +77,18 @@ public class Player : MonoBehaviour {
 
 	public bool promptLeaveCommander()
 	{
-		bool success = false;
+		bool success;
 		lock (this) {
-			if ( Role.COMMANDER == currentRole ) {
-				// POP UP PROMPT
-				// Assume (for now) that they always leave when prompted
-				success = CommandBase.Instance.leave (this);
+			switch ( currentRole ) {
+				case Role.COMMANDER:
+					// POP UP PROMPT
+					// Assume (for now) that they always leave when prompted
+					success = CommandBase.Instance.leave (this);
+					break;
+				default:
+					// Wasn't a COMMANDER to begin with
+					success = true;
+					break;
 			}
 		}
 		return success;
