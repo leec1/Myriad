@@ -20,12 +20,16 @@ namespace AssemblyCSharp
 		
 		bool becomeCommander()
 		{
-			Console.WriteLine ("Attempting to become a Commander");
-			if (CommandBase.Instance.enter (this)) {
-				Console.WriteLine ( "You are now commander!");
-
+			bool success = false;
+			Console.WriteLine ("Attempting to become the Commander");
+			if (CommandBase.Instance.enter(this)) {
+				Console.WriteLine ("You are now the commander!");
+				success = true;
+			} else {
+				Console.WriteLine ("You are still a soldier! ");
+				// success already false
 			}
-			return false;
+			return success;
 		}
 
 		public Soldier ()

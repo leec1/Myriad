@@ -12,6 +12,28 @@ namespace AssemblyCSharp
 {
 	public class Commander : Role
 	{
+
+		bool becomeSoldier()
+		{
+			bool success = false;
+			Console.WriteLine ("Attempting to become a Soldier");
+			if (CommandBase.Instance.leave(this)) {
+				Console.WriteLine ("You are now soldier!");
+				success = true;
+			} else {
+				Console.WriteLine ("You are still the commander! ");
+				// success already false
+			}
+			return success;
+		}
+		
+		bool becomeCommander()
+		{
+			Console.WriteLine("Already the Commander!");
+			return false;
+
+		}
+
 		public Commander ()
 		{
 		}

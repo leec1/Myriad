@@ -48,7 +48,23 @@ namespace AssemblyCSharp
 				}
 			}
 
+			return success;
+		}
 
+		public static bool leave( Commander commmander )
+		{
+			bool success = false;
+			if (currentCommander.Equals (commander)) {
+				lock (instance) {
+					currentCommander = null;
+				}
+				success = true;
+				Console.WriteLine ("You are leaving the command base unoccupied, is this the best idea?");
+			} else {
+				Console.WriteLine ("You aren't the Commander! You can't leave!");
+				// Success already set to false!
+			}
+			return success;
 		}
 	}
 }

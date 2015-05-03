@@ -13,7 +13,7 @@ namespace AssemblyCSharp
 	public abstract class Role
 	{
 		const ViewStyle view;
-		abstract bool becomeCommander(CommandBase CBI);
+		abstract bool becomeCommander();
 		abstract bool becomeSoldier();
 
 	}

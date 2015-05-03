@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		currentRole = new Soldier ();
+
 	}
 	
 	// Update is called once per frame
