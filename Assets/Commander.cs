@@ -12,8 +12,8 @@ namespace AssemblyCSharp
 {
 	public class Commander : Role
 	{
-
-		bool becomeSoldier()
+		const ViewStyle view = ViewStyle.firstPerson;
+		public override bool becomeSoldier()
 		{
 			bool success = false;
 			Console.WriteLine ("Attempting to become a Soldier");
@@ -27,11 +27,19 @@ namespace AssemblyCSharp
 			return success;
 		}
 		
-		bool becomeCommander()
+		public override bool becomeCommander()
 		{
 			Console.WriteLine("Already the Commander!");
 			return false;
 
+		}
+
+		public bool promptLeave()
+		{
+			Console.WriteLine ("Being prompted to leave");
+			// Currently always give up being a commander
+			CommandBase.Instance.leave (this);
+			return true;
 		}
 
 		public Commander ()

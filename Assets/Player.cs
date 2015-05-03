@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AssemblyCSharp;
 
 public class Player : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		currentRole = new Soldier ();
 	}
 	
 	// Update is called once per frame

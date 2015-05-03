@@ -26,20 +26,20 @@ namespace AssemblyCSharp
 			}
 		}
 
-		public static bool enter( Commander newCommander )
+		public bool enter( Role newCommander )
 		{
 			bool success = false;
-			if (!isOccupied) {
+			if (!instance.isOccupied) {
 				lock (instance) {
-					currentCommander = newCommander;
-					isOccupied = true;
+					instance.currentCommander = (Commander) newCommander;
+					instance.isOccupied = true;
 				}
 				success = true;
 			} else {
-				if (currentCommander.giveUpCommander ()) {
+				if (instance.currentCommander.promptLeave()) {
 					lock (instance) {
-						currentCommander = newCommander;
-						isOccupied = true;
+						instance.currentCommander = (Commander) newCommander;
+						instance.isOccupied = true;
 					}
 					success = true;
 				} else {
@@ -51,12 +51,12 @@ namespace AssemblyCSharp
 			return success;
 		}
 
-		public static bool leave( Commander commmander )
+		public bool leave( Commander commander )
 		{
 			bool success = false;
-			if (currentCommander.Equals (commander)) {
+			if (instance.currentCommander.Equals ( commander ) ){
 				lock (instance) {
-					currentCommander = null;
+					instance.currentCommander = null;
 				}
 				success = true;
 				Console.WriteLine ("You are leaving the command base unoccupied, is this the best idea?");

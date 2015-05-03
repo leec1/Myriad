@@ -12,13 +12,14 @@ namespace AssemblyCSharp
 {
 	public class Soldier : Role
 	{
-		bool becomeSoldier()
+		const ViewStyle view = ViewStyle.topDown;
+		public override bool becomeSoldier()
 		{
 			Console.WriteLine("Already a Soldier!");
 			return false;
 		}
 		
-		bool becomeCommander()
+		public override bool becomeCommander()
 		{
 			bool success = false;
 			Console.WriteLine ("Attempting to become the Commander");

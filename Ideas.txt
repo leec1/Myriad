@@ -1,0 +1,210 @@
+﻿* MVP(The part we are good at)
+   * GAME
+      * Players:Player[]
+      * CommandBaseInstance:CommandBase
+      * EnemyControllerInstance:EnemyController
+      * DifficultyLevel:Enum
+      * CREATE ROUND()
+      * Game cycle:
+         * Game start
+            *  make CBI and ECI
+         * Round start
+            * All Players respawn with full? health regardless of previous round final state
+            * pass players in, send eci round info
+               * CBI spawns players
+               * ECI spawns ais with their info
+                  * Each round increases in difficulty ?
+                  * If Final round, Spawns Boss
+            * starts round
+            * on ECI reporting 0 enemies remain ROUND OVER
+            * on CBI report 0 players OR 0 health GAME OVER ( 0 CBI Health ? ) 0cbi health yeah because even if all soldiers die there are automated stuff/commanders units -- can’t do just 0 health cause then we could get to a stalemate, the auto turrets could be strong enough to hold off all AI advances well your commander is alive till the cbi isnt so he can still do shit -- changed ‘soldiers’ to ‘players’ k so since commanders cant be damaged the cbi can and if cbi goes to 0 health then it kills commander - that works
+            * and commanders cant leave the cb until someone tried to replace them, like it says “send request to commander to switch” and you gotta click k
+            * so you always have to have a commander
+               * why not let the command base be unattended?
+                  * Not ever likely but like leaving an empty net in hockey/soccer
+                  * But leaving it unattended reduces health/quality of turrets so its easier to destroy
+                  * and if destroyed, game over even if players live
+                  * eh? ok yeah could work keep both ideas
+   * Player
+      * Is able to
+         * Be soldier
+         * Be commander
+         * connect to server
+      * Has data:
+         * UserName:String
+         * Mushy network info:MNI
+         * CurrentRole:Role
+         * Health:int
+            * At 0 Health, you now ‘view’ the command base
+               * ( you’ve been returned to the base hospital etc. )
+         * Money:int
+         * Unity:GameObject
+         * Current Equipment
+            * Weapon:Unity:Weapon
+            * Armor:Unity:Weapon
+      * Current Display / Action Options based on CurrentRole
+         * CurrentRole.availableActions
+         * CurrentRole.viewModel
+   * Role
+      * ABSTRACT
+         * availableActions
+         * viewModel
+   * Solider
+      * availableActions
+         * DEFAULTS
+            * Movement : w,a,s,d
+            * Jump : space
+            * Sprint : shift
+            * Rotate : mouse
+            * Fire: m1
+         * Become Commander
+            * If CommandBase:Mutex is NOT available, prompt currentCommander to give up position
+      * viewModel
+         * FPS
+      * Has Function
+         * SellValue=modifiers and such for weapon type to return numb based on type/skill/etc
+            * Constants upgradable?
+   * Armor
+      * CONFIGURABLE
+         * Resistance:DamageType
+         * Manuverability vs. Protection trade off
+            *    * Weapons
+      * UNIVERSAL CONST - OVERHEAT LEVEL
+      * Is able to
+         * be fired
+         * be configured
+      * Configuration Options:
+         * Damage Type : Enum
+         * Projectiles
+   * Projectiles
+      * Starting
+         * bullet
+            * small/medium/large
+            * bullets can be customizeable eventually :D
+      * Researchable
+         * Saw Blade
+         *          * Assault Rifle
+         * Mortar
+         * Sniper
+      * Has stats of
+         * Name
+         * damage type
+            * Explosive, Incendiary 
+         * projectile type(for physics purposes)
+            * bullet size
+            * saw blade
+            * etc
+            * more like rail gun blasters basically its what config you slap your rails in to do stuff…….wait this gives me a crazy idea
+            * configurable rails so you can load different rounds, change exit velo etc to change heat production and shot distance
+            * All truly “phasers” but of different projectile “sizes” etc.
+            * Only 1 “WEAPON” per soldier, but it is individually configured based on team universally available configs researched at the base   ^^^^^^
+            * special weapon in off hand
+            *          * exitVelocity
+         * currentHeat:int
+         * coolDownRate:int ( Heat subtracted per second )
+         * warmUpRate:int  ( Heat added per shot )
+         * fireRate:int ?
+         * Could make overheat level constant and just modify the rate of increase/decrease, so “OVERHEAT” is triggered at the same currentHeat level, but 
+   * Commander:
+      * availableActions
+         * CONTROL COMMAND BASE
+         * Upgrades
+         * Team Coordination
+            * AIlied AI Teams?
+         * Resource Finding ?
+         * BecomeSoldier ( Frees Command Base Mutex )
+      * viewModel
+         * RTS
+         * Top Down
+   * Command Base 
+      * SINGLETON MUTEX
+      * CurrentCommander
+      * Sprite/3D Model
+      * Money:int
+      * “Ore” ?
+      * Health:int
+      * maxHealth: int
+      * On Health == 0, CurrentCommander loses ALL HEALTH
+      * Team/Base Upgrades
+         * Base Defense?
+            * Base Auto Turrets
+            * Defense Strength ( increase max Health )
+            * Repair ( increase current Health )
+         * Team Rail Upgrades
+            * Sniper
+            * Saw Blade
+            * Mortar
+         * Utility
+            * Base Radar
+            * Soldier Radar
+            * Communication
+         * Body Armor Materials
+            * Can result in increased flexibility/protection abilities
+               * Suite of Armor vs. Kevlar etc.
+         * Base Buildings
+            * Reduce cost of certain upgrades
+            * Armory
+            * Hospital
+            * Tower
+        
+
+
+   * Enemies
+      * EnemyController singleton
+         * Does data analysis to give ai orders
+         * spawns enemies and gives them brains
+            * Swarm mentality? Swarm of Swarms?
+   * Networking
+      * Host:Player
+      * Other RTS Mutliplayer Networking magic
+
+
+Details(The less good part)
+
+
+Soldier 
+        
+
+
+
+
+
+
+
+
+Commander
+
+
+
+
+
+
+
+
+
+
+Enemies
+
+
+
+
+
+
+
+
+
+
+Networking
+
+
+
+
+
+
+
+
+(future considerations)
+art
+sound
+creativity
+sticking to something + ∞
