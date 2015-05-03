@@ -16,6 +16,7 @@ namespace AssemblyCSharp
 		{
 			return ViewStyle.firstPerson;
 		}
+
 		public override bool becomeSoldier()
 		{
 			Console.WriteLine("Already a Soldier!");

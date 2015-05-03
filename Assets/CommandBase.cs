@@ -14,9 +14,12 @@ namespace AssemblyCSharp
 	{
 		private static readonly CommandBase instance = new CommandBase();
 
-		Commander currentCommander = null;
+		private Commander currentCommander = null;
 
-		bool isOccupied = false;
+		private bool isOccupied = false;
+
+		private int currentHealth;
+		private int maxHealth;
 
 		public CommandBase (){}
 
