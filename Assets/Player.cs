@@ -4,8 +4,7 @@ using AssemblyCSharp;
 
 public class Player : MonoBehaviour {
 	
-	private Role currentRole = Role.INVALID;
-	private ViewStyle viewStyle = ViewStyle.INVALID;
+	private Role currentRole = null;
 	private int currentHealth;
 	private int maxHealth;
 	private int money;
@@ -15,8 +14,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		name = "BOB";
-		currentRole = Role.SOLDIER;
-		viewStyle = ViewStyle.FIRST_PERSON;
+		this.becomeSoldier();
 		maxHealth = 100;
 		currentHealth = maxHealth;
 		money = 0;
@@ -31,22 +29,18 @@ public class Player : MonoBehaviour {
 
 	public bool becomeSoldier()
 	{
-		bool success;
+		bool success = false;
 		lock (this) {
-			switch ( currentRole ) {
-				case Role.COMMANDER:
-					if (CommandBase.Instance.leave (this)) {
-						// Successfully Left the Commmand Base
-						currentRole = Role.SOLDIER;
-						viewStyle = ViewStyle.FIRST_PERSON;
-						success = true;
-					} else {
-						success = false;
-					}
-					break;
-				default:
-					success = false;
-					break;
+			if ( null == currentRole ) {
+				currentRole = new Soldier( this );
+				success = true;
+			} else {
+				Soldier newRole = currentRole.becomeSoldier();
+				if (null != newRole) {
+					// Successfully Left the Commmand Base
+					currentRole = newRole;
+					success = true;
+				}
 			}
 		}
 		return success;
@@ -54,22 +48,21 @@ public class Player : MonoBehaviour {
 
 	public bool becomeCommander()
 	{
-		bool success;
+		bool success = false;
 		lock ( this ) {
-			switch ( currentRole ) {
-				case Role.SOLDIER:
-					if ( CommandBase.Instance.enter (this) ) {
-						// Successfully Entered the Command Base
-						currentRole = Role.COMMANDER;
-						viewStyle = ViewStyle.TOP_DOWN;
-						success = true;
-					} else {
-						success = false;
-					}
-					break;
-				default:
-					success = false;
-					break;
+			if ( null == currentRole )
+			{
+				if ( CommandBase.Instance.enter( this ) ) {
+					currentRole = new Commander( this );
+					success = true;
+				}
+			} else {
+				Commander newRole = currentRole.becomeCommander();
+				if ( null != newRole ) {
+					// Successfully Entered the Command Base
+					currentRole = newRole;
+					success = true;
+				}
 			}
 		}
 		return success;
@@ -77,21 +70,9 @@ public class Player : MonoBehaviour {
 
 	public bool promptLeaveCommander()
 	{
-		bool success;
-		lock (this) {
-			switch ( currentRole ) {
-				case Role.COMMANDER:
-					// POP UP PROMPT
-					// Assume (for now) that they always leave when prompted
-					success = CommandBase.Instance.leave (this);
-					break;
-				default:
-					// Wasn't a COMMANDER to begin with
-					success = true;
-					break;
-			}
-		}
-		return success;
+		// POP UP PROMPT
+		// Assume (for now) that they always leave when prompted
+		return this.becomeSoldier();
 	}
 
 	

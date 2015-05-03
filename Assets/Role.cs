@@ -10,11 +10,11 @@
 using System;
 namespace AssemblyCSharp
 {
-	public enum ViewStyle
+	public abstract class Role
 	{
-		INVALID,
-		TOP_DOWN,
-		FIRST_PERSON
+		public abstract ViewStyle viewStyle();
+		public abstract Commander becomeCommander();
+		public abstract Soldier becomeSoldier();
 	}
 }
 

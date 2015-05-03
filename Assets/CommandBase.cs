@@ -21,7 +21,14 @@ namespace AssemblyCSharp
 		private int currentHealth;
 		private int maxHealth;
 
-		public CommandBase (){}
+		public CommandBase (){
+			initializeCommandBase ();
+		}
+
+		private void initializeCommandBase() {
+			maxHealth = 100;
+			currentHealth = 0;
+		}
 
 		public static CommandBase Instance {
 			get {
@@ -29,45 +36,37 @@ namespace AssemblyCSharp
 			}
 		}
 
+		public void resetCommandBase(){
+			initializeCommandBase();
+		}
+
 		public bool enter( Player newCommander )
 		{
 			bool success = false;
-			if (!instance.isOccupied) {
-				lock (instance) {
-					instance.currentCommander = newCommander;
-					instance.isOccupied = true;
-				}
-				success = true;
-			} else {
-				if (instance.currentCommander.promptLeaveCommander()) {
-					lock (instance) {
+			if ( !instance.currentCommander.Equals( newCommander ) ) {
+				if ( !instance.isOccupied || instance.currentCommander.promptLeaveCommander() ) {
+					lock (instance)
+					{
 						instance.currentCommander = newCommander;
 						instance.isOccupied = true;
 					}
 					success = true;
-				} else {
-					Console.WriteLine ("Already have a commander and they don't want to give it up!");
-					// Success already set to false
 				}
 			}
-
 			return success;
 		}
 
-		public bool leave( Player commander )
+		public bool leave( Player oldCommander )
 		{
 			bool success = false;
-			if (instance.currentCommander.Equals ( commander ) ){
+			if (instance.currentCommander.Equals ( oldCommander ) ){
 				lock (instance) {
 					instance.currentCommander = null;
 					instance.isOccupied = false;
 				}
 				success = true;
-				Console.WriteLine ("You are leaving the command base unoccupied, is this the best idea?");
-			} else {
-				Console.WriteLine ("You aren't the Commander! You can't leave!");
-				// Success already set to false!
 			}
+
 			return success;
 		}
 	}
