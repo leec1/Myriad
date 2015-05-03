@@ -12,7 +12,7 @@ namespace AssemblyCSharp
 {
 	public abstract class Role
 	{
-		ViewStyle view;
+		public abstract ViewStyle viewStyle();
 		public abstract bool becomeCommander();
 		public abstract bool becomeSoldier();
 

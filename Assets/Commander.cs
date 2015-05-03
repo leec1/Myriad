@@ -12,7 +12,11 @@ namespace AssemblyCSharp
 {
 	public class Commander : Role
 	{
-		const ViewStyle view = ViewStyle.firstPerson;
+		public override ViewStyle viewStyle ()
+		{
+			return ViewStyle.topDown;
+		}
+
 		public override bool becomeSoldier()
 		{
 			bool success = false;

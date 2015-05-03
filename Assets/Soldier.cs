@@ -12,7 +12,10 @@ namespace AssemblyCSharp
 {
 	public class Soldier : Role
 	{
-		const ViewStyle view = ViewStyle.topDown;
+		public override ViewStyle viewStyle ()
+		{
+			return ViewStyle.firstPerson;
+		}
 		public override bool becomeSoldier()
 		{
 			Console.WriteLine("Already a Soldier!");
