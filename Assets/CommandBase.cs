@@ -14,7 +14,7 @@ namespace AssemblyCSharp
 	{
 		private static readonly CommandBase instance = new CommandBase();
 
-		private Commander currentCommander = null;
+		private Player currentCommander = null;
 
 		private bool isOccupied = false;
 
@@ -29,19 +29,19 @@ namespace AssemblyCSharp
 			}
 		}
 
-		public bool enter( Role newCommander )
+		public bool enter( Player newCommander )
 		{
 			bool success = false;
 			if (!instance.isOccupied) {
 				lock (instance) {
-					instance.currentCommander = (Commander) newCommander;
+					instance.currentCommander = newCommander;
 					instance.isOccupied = true;
 				}
 				success = true;
 			} else {
-				if (instance.currentCommander.promptLeave()) {
+				if (instance.currentCommander.promptLeaveCommander()) {
 					lock (instance) {
-						instance.currentCommander = (Commander) newCommander;
+						instance.currentCommander = newCommander;
 						instance.isOccupied = true;
 					}
 					success = true;
@@ -54,12 +54,13 @@ namespace AssemblyCSharp
 			return success;
 		}
 
-		public bool leave( Commander commander )
+		public bool leave( Player commander )
 		{
 			bool success = false;
 			if (instance.currentCommander.Equals ( commander ) ){
 				lock (instance) {
 					instance.currentCommander = null;
+					instance.isOccupied = false;
 				}
 				success = true;
 				Console.WriteLine ("You are leaving the command base unoccupied, is this the best idea?");

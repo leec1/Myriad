@@ -12,8 +12,16 @@ namespace AssemblyCSharp
 {
 	public enum ViewStyle
 	{
-		topDown,
-		firstPerson
+		INVALID,
+		TOP_DOWN,
+		FIRST_PERSON
+	}
+
+	public enum Role
+	{
+		INVALID,
+		SOLDIER,
+		COMMANDER
 	}
 }
 
